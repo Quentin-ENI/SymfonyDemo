@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    <h2>Bonjour {{ firstname }}</h2>
+
+    {#
+        Je créé la variable dans laquelle je mets la valeur "Gondor"
+    #}
+    {% set region = "Gondor" %}
+    {% set hobbits = ["Frodon", "Sam"] %}
+    {%
+    set fellowship = {
+        'dwarf': 'Gimli',
+        'human1': 'Aragorn',
+        'human2': 'Boromir',
+    }
+    %}
+
+    <h2>{{ region }}</h2>
+
+    {% if region == "Mordor" %}
+        <p>Jette l'anneau.</p>
+    {% elseif region == "Gondor" %}
+        <p>Nous sommes actuellement dans la région {{ region }}</p>
+        <p>On se dirige vers le Mordor</p>
+    {% elseif region == "Rohan" %}
+        <p>On va se ballader à cheval</p>
+    {% else %}
+        <p>Je ne sais pas où je suis.</p>
+    {% endif %}
+
+    <ul>
+        {% for hobbit in hobbits %}
+            <li>{{ hobbit|upper }}</li>
+        {% endfor %}
+    </ul>
+
+    {% for key, value in fellowship %}
+        <p>{{ value|lower }} est un {{ key }}</p>
+    {% endfor %}
+
+    {%
+        set poem = "foezjf eoafpjeia
+            fnuezfneozfjezi fezufez
+            vezoc fehzudheauid fjeaiodea
+            dazeidbzayui
+            "
+    %}
+
+    <p>{{ poem|nl2br }}</p>
+
+    {% set random_number = 156464554.77895 %}
+
+    <p>{{ random_number|number_format(2, ',', ' ') }}</p>
+
+    {% set my_fabulous_title = "<h2>Mon super titre</h2>" %}
+
+    {{ my_fabulous_title|raw }}
+
+    {% set xss_attack = "<script>alert(\"You are under attack\")</script>" %}
+
+    {{ xss_attack }}
+
+    <p>Il y a {{ hobbits|length }} hobbits dans mon tableau.</p>
+
+</div>
+{% endblock %}

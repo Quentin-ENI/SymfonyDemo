@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AnimalController for details!{% endblock %}
+
+{% block body %}
+    <h1>Animal details</h1>
+    {% if animal %}
+        <p>L'animal qui a été récupéré s'appelle {{ animal.name }} et est un(e) {{ animal.specie }}</p>
+    {% else %}
+        <p>Il n'y a pas d'animaux correspondant à cet id en base de données.</p>
+    {% endif %}
+{% endblock %}

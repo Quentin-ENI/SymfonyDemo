@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello animal road to DQL!{% endblock %}
+
+{% block body %}
+    <div>
+        <h1>Hello animal road to DQL!</h1>
+        {% for animal in animals %}
+            <p>Mon animal s'appelle {{ animal.name }} et il vient de {{ animal.placeOfBirth }}</p>
+            <p>Son espèce est {{ animal.specie }}.</p>
+            <p>Son id est {{ animal.id }}.</p>
+            <hr>
+        {% endfor %}
+    </div>
+{% endblock %}

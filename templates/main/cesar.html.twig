@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ path("assets/css/cesar.css") }}">
+{% endblock %}
+
+{% block title %}
+    Avé {{ username }}
+{% endblock %}
+
+{% block body %}
+    <h1>Avé {{ username }}</h1>
+    <h2>Morituri te salutante</h2>
+    <p>Vous avez {{ numberOfLegions }}
+        {% if numberOfLegions > 1 %}
+            légions.
+        {% else %}
+            légion.
+        {% endif %}
+    </p>
+{% endblock %}
