@@ -4,5 +4,39 @@
 
 {% block body %}
     <h1>Animal creation</h1>
-{#    <p>L'animal de type {{ animal.specie }} et qui s'appelle {{ animal.name }} a bien été créé en base de donnée.</p>#}
+    <div class="container">
+        {{ form_start(animalForm) }}
+
+        <div>
+            {{ form_label(animalForm.name) }}: <br>
+            {{ form_widget(animalForm.name) }} <br>
+            {{ form_errors(animalForm.name) }}
+        </div>
+        <div class="mt-20">
+            {{ form_label(animalForm.birthdate) }}: <br>
+            {{ form_widget(animalForm.birthdate) }} <br>
+            {{ form_errors(animalForm.birthdate) }}
+        </div>
+        <div class="mt-20">
+            {{ form_label(animalForm.specie) }}: <br>
+            {{ form_widget(animalForm.specie) }} <br>
+            {{ form_errors(animalForm.specie) }}
+        </div>
+        <div class="mt-20">
+            {{ form_label(animalForm.placeOfBirth) }}: <br>
+            {{ form_widget(animalForm.placeOfBirth) }} <br>
+            {{ form_errors(animalForm.placeOfBirth) }}
+        </div>
+        <div class="mt-20">
+            {{ form_label(animalForm.serial) }}: <br>
+            {{ form_widget(animalForm.serial) }} <br>
+            {{ form_errors(animalForm.serial) }}
+        </div>
+
+        <div class="mt-20">
+            <button type="submit">Envoyer</button>
+        </div>
+
+        {{ form_end(animalForm) }}
+    </div>
 {% endblock %}

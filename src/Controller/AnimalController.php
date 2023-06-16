@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Animal;
+use App\Form\AnimalType;
 use App\Repository\AnimalRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -50,21 +53,29 @@ class AnimalController extends AbstractController
     }
 
     #[Route('/create', name: 'create')]
-    public function create(EntityManagerInterface $entityManager): Response
+    public function create(
+        EntityManagerInterface $entityManager,
+        Request $request
+    ): Response
     {
+        $animal = new Animal();
+        $animalForm = $this->createForm(AnimalType::class, $animal);
 
-        foreach ($this->animals as $animal) {
-            $animalEntity = new Animal();
-            $animalEntity->setName("Sylvain");
-            $animalEntity->setSpecie($animal[0]);
-            $animalEntity->setPlaceOfBirth($animal[1]);
-            $animalEntity->setBirthdate(new \DateTime());
-            $entityManager->persist($animalEntity);
+        $animalForm->handleRequest($request);
+
+        if ($animalForm->isSubmitted() && $animalForm->isValid()) {
+            try {
+                $entityManager->persist($animal);
+                $entityManager->flush();
+                $this->addFlash('success', "L'animal a bien été inséré en base de données.");
+            } catch (Exception $exception) {
+                $this->addFlash('danger', "L'animal n'a pas été inséré en base de données.");
+            }
         }
-        $entityManager->flush();
 
-
-        return $this->render('animal/create.html.twig');
+        return $this->render('animal/create.html.twig', [
+            "animalForm" => $animalForm->createView()
+        ]);
     }
 
     #[Route('/custom', name: 'custom')]

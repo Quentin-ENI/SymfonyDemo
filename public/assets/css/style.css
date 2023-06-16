@@ -2,3 +2,20 @@ h1 {
     background-color: darkblue;
     color: white;
 }
+
+.container {
+    padding: 40px;
+    background-color: cyan;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.alert-success {
+    background-color: green;
+}
+
+.alert-danger {
+    background-color: red;
+}
