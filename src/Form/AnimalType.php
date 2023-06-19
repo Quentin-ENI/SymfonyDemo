@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Animal;
+use App\Entity\Pen;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,6 +32,17 @@ class AnimalType extends AbstractType
             ->add('specie')
             ->add('placeOfBirth')
             ->add('serial')
+            ->add(
+                'pen',
+                EntityType::class,
+                [
+                    'class' => Pen::class,
+                    'choice_label' => 'name',
+                    'label' => 'Enclos',
+                    'multiple' => false,
+                    'required' => false
+                ]
+            )
         ;
     }
 

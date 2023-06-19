@@ -46,6 +46,10 @@ class Animal
     #[ORM\Column(nullable: true)]
     private ?int $serial = null;
 
+    #[ORM\ManyToOne(inversedBy: 'animals')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Pen $pen = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +111,18 @@ class Animal
     public function setSerial(?int $serial): static
     {
         $this->serial = $serial;
+
+        return $this;
+    }
+
+    public function getPen(): ?Pen
+    {
+        return $this->pen;
+    }
+
+    public function setPen(?Pen $pen): static
+    {
+        $this->pen = $pen;
 
         return $this;
     }
