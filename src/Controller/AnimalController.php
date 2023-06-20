@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/animal', name: 'animal_')]
 class AnimalController extends AbstractController
@@ -23,6 +24,7 @@ class AnimalController extends AbstractController
     ];
 
     #[Route('/', name: 'list')]
+    #[IsGranted("ROLE_SUPER_ADMIN")]
     public function list(AnimalRepository $animalRepository): Response
     {
         $animals = $animalRepository->findAll();
@@ -43,6 +45,7 @@ class AnimalController extends AbstractController
         requirements: ["id" => "\d+"],
         methods: ["GET"]
     )]
+    #[IsGranted("ROLE_SUPER_ADMIN")]
     public function details($id, AnimalRepository $animalRepository): Response
     {
         $animal = $animalRepository->find($id);
@@ -53,6 +56,7 @@ class AnimalController extends AbstractController
     }
 
     #[Route('/create', name: 'create')]
+    #[IsGranted("ROLE_ADMIN")]
     public function create(
         EntityManagerInterface $entityManager,
         Request $request
