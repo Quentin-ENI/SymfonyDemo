@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Animal;
 use App\Form\AnimalType;
+use App\Notification\NotificationService;
 use App\Repository\AnimalRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Exception;
@@ -59,7 +60,8 @@ class AnimalController extends AbstractController
     #[IsGranted("ROLE_ADMIN")]
     public function create(
         EntityManagerInterface $entityManager,
-        Request $request
+        Request $request,
+        NotificationService $notificationService
     ): Response
     {
         $animal = new Animal();
@@ -72,6 +74,14 @@ class AnimalController extends AbstractController
                 $entityManager->persist($animal);
                 $entityManager->flush();
                 $this->addFlash('success', "L'animal a bien été inséré en base de données.");
+                $senderMail = $this->getParameter('mail.contact');
+                $receiverMail = $this->getParameter('mail.admin');
+                $user = $this->getUser();
+                $notificationService->sendMailAnimalCreation(
+                    $senderMail,
+                    $receiverMail,
+                    $user
+                );
             } catch (Exception $exception) {
                 $this->addFlash('danger', "L'animal n'a pas été inséré en base de données.");
             }
