@@ -2,15 +2,21 @@
 
 namespace App\Notification;
 
+use App\Helper\HelperService;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
 class NotificationService
 {
     private $mailer;
+    private $helperService;
 
-    public function __construct(MailerInterface $mailer) {
+    public function __construct(
+        MailerInterface $mailer,
+        HelperService $helperService
+    ) {
         $this->mailer = $mailer;
+        $this->helperService = $helperService;
     }
 
     public function sendMailAnimalCreation($senderMail, $receiverMail, $user) {
@@ -24,6 +30,7 @@ class NotificationService
             ->subject('Un nouvel animal a été créé!')
             ->html('<h1>Nouvel animal!</h1><p>Un animal a été créé par '. $user->getEmail() .'</p>');
 
+        $this->helperService->helpUser("A mail will be sent.");
         $this->mailer->send($email);
     }
 }
